@@ -21,9 +21,22 @@ htmlString :: String -> ActionM ()
 htmlString = html . LT.pack
 
 indexHtml :: ActionM () 
-indexHtml = htmlString $ e "h1" "HiKi"
+indexHtml = htmlString $ Hiki.Web.body "HiKi"
+
+body :: String -> Html
+body title = e "body" $ homeLink ++ (e "h1" title) ++ searchForm
+
+searchForm :: Html
+searchForm = 
+  e "form" $
+    ea "input" [("id", "searchform"), ("action", "/post")] "" ++ ea "button" [("type", "submit")] "Search"
+
+homeLink :: Html
+homeLink = 
+   ea "a" [("href", "/")] "home" 
 
 nbsp :: Html
+   
 nbsp = "&nbsp;"
 
 -- Creates an element
